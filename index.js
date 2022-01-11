@@ -7,12 +7,13 @@ function exception(error) {
 
 function getFile(path) {
     const enconding = 'utf-8';
-    fs.readFile(path, enconding, function (error, data) {
-        if (error)
-            exception(error);
-        else
+    fs.promises.readFile(path, enconding)
+        .then((data) => {
             console.log(chalk.green(data));
-    });
+        })
+        .catch((error) => {
+            exception(error);
+        });
 };
 
 getFile('./files/texto.md');
