@@ -8,7 +8,7 @@ async function checkStatus(urls) {
     try {
         const status = await Promise.all(urls.map(async url => {
             const response = await fetch(url);
-            return response.status;
+            return `${response.status} - ${response.statusText}`;
         }));
 
         return status;
