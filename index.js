@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import fs, { link } from 'fs';
+import fs from 'fs';
 
 function exception(error) {
     throw new Error(chalk.red(error));
@@ -40,4 +40,5 @@ function extractLinks(text) {
 //         });
 // };
 
-getFile('./files/texto.md');
+//getFile('./files/texto.md');
+export { getFile };
