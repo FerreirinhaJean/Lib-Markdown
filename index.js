@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import fs from 'fs';
+import fs, { link } from 'fs';
 
 function exception(error) {
     throw new Error(chalk.red(error));
@@ -11,10 +11,21 @@ async function getFile(path) {
         const enconding = 'utf-8';
         const text = await fs.promises.readFile(path, enconding);
 
-        console.log(chalk.green(text));
+        console.log(extractLinks(text));
     } catch (error) {
         exception(error);
     }
+};
+
+function extractLinks(text) {
+    const regex = /\[([^\]]*)\]\((http?s:\/\/[^$#\s].[^\s]*)\)/gm;
+    const results = [];
+    let temp;
+
+    while ((temp = regex.exec(text)) !== null)
+        results.push({ [temp[1]]: temp[2] });
+
+    return results;
 };
 
 //Utilizando Promisse com Then()
@@ -30,4 +41,3 @@ async function getFile(path) {
 // };
 
 getFile('./files/texto.md');
-
