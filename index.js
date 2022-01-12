@@ -11,7 +11,7 @@ async function getFile(path) {
         const enconding = 'utf-8';
         const text = await fs.promises.readFile(path, enconding);
 
-        console.log(extractLinks(text));
+        return extractLinks(text);
     } catch (error) {
         exception(error);
     }
@@ -25,8 +25,10 @@ function extractLinks(text) {
     while ((temp = regex.exec(text)) !== null)
         results.push({ [temp[1]]: temp[2] });
 
-    return results;
+    return results.length === 0 ? 'Não há links' : results;
 };
+
+export { getFile };
 
 //Utilizando Promisse com Then()
 // function getFile(path) {
@@ -41,4 +43,3 @@ function extractLinks(text) {
 // };
 
 //getFile('./files/texto.md');
-export { getFile };
